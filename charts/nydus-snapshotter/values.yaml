@@ -52,6 +52,21 @@ podAnnotations: {}
 podLabels: {}
 # -- Daemonset annotations
 daemonsetAnnotations: {}
+# -- Daemonset update strategy
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+# TODO(Mike): Should probably nest in nydusd section.
+backend:
+  # The nydusd backend
+  # Ref: https://github.com/dragonflyoss/nydus/blob/master/docs/nydusd.md#use-different-storage-backends
+  type: "registry"
+  httpProxy:
+    addr: ""
+    path: ""
 
 dragonfly:
   # -- Enable dragonfly

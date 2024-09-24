@@ -13,10 +13,14 @@ data:
     {
       "device": {
         "backend": {
-          "type": "registry",
+          "type": "{{ .Values.backend.type }}",
           "config": {
           {{- if .Values.dragonfly.enable }}
             "mirrors": {{ mustToJson .Values.dragonfly.mirrorConfig }},
+          {{- end }}
+          {{- if eq .Values.backend.type "http-proxy" }}
+            "addr": "{{ .Values.backend.httpProxy.addr }}",
+            "path": "{{ .Values.backend.httpProxy.path }}",
           {{- end }}
             "timeout": 5,
             "connect_timeout": 5,
