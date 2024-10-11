@@ -8,6 +8,9 @@ global:
   # -- Global node labels for pod assignment.
   nodeSelector: {}
 
+# -- Log level for nydus-snapshotter, and nydus
+logLevel: "info"
+
 # -- nydus-snapshotter name
 name: nydus-snapshotter
 image:
@@ -63,6 +66,20 @@ dragonfly:
       "X-Dragonfly-Registry": "https://index.docker.io"
     ping_url: "http://127.0.0.1:4003/healthy"
 
+# Service Account settings
+serviceAccount:
+  create: true
+  annotations: {}
+  automount: true
+
+# Cluster role and bindings
+clusterrole:
+  create: true
+
+# Init container settings
+init:
+  containerd:
+    restartTimeout: 60
 
 # -- [Experimental] Container runtime support
 # Choose special container runtime in Kubernetes.
@@ -86,3 +103,15 @@ containerRuntime:
     enable: true
     # -- Custom config path directory, default is /etc/containerd/config.toml
     configFile: "/etc/containerd/config.toml"
+
+# nydusd configuration
+nydusd:
+  backend:
+    type: "registry"
+    config: {}
+  cache:
+    type: "blobcache"
+    config:
+      work_dir: "/data/nydus/cache"
+  # direct | cached
+  mode: "direct"
