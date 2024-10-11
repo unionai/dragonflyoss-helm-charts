@@ -74,20 +74,22 @@ spec:
               - "-c"
               - |
                 # currently, without host pid in container, we can not nsenter with pid and can not invoke systemctl correctly.
-                nsenter -t 1 -m systemctl -- restart containerd.service
+                wait_time={{ .Values.init.containerd.restartTimeout | quote }}
+                service=containerd
+                nsenter -t 1 -m systemctl restart $service
 
-                # Wait for containerd to be fully up (adjust timeout as needed)
-                timeout={{ .Values.init.containerd.restartTimeout }}
-                while [ $timeout -gt 0 ]; do
-                  if nsenter -t 1 -m systemctl is-active --quiet containerd.service; then
-                    echo "containerd successfully restarted"
-                    exit 0
-                  fi
-                  sleep 1
-                  timeout=$((timeout - 1))
+                while [ "$wait_time" -gt 0 ]; do
+                    if nsenter -t 1 -m systemctl is-active --quiet $service; then
+                        echo "$service is running"
+                        return 0
+                    else
+                        sleep "1"
+                        wait_time=$((wait_time-1))
+                    fi
                 done
 
-                echo "Failed to restart containerd within the timeout period"
+                echo "Timeout reached. $service may not be running."
+                nsenter -t 1 -m systemctl status $service
                 exit 1
         {{- end }}
         command: ["/opt/nydus-artifacts/usr/local/bin/containerd-nydus-grpc"]
