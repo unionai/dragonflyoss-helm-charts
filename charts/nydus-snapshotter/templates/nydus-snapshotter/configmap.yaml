@@ -34,8 +34,8 @@ data:
     [daemon]
     # Specify a configuration file for nydusd
     nydusd_config = "/etc/nydus/nydusd-config.json"
-    nydusd_path = "/usr/local/bin/nydusd"
-    nydusimage_path = "/usr/local/bin/nydus-image"
+    nydusd_path = "/opt/nydus-artifacts/usr/local/bin/nydusd"
+    nydusimage_path = "/opt/nydus-artifacts/usr/local/bin/nydus-image"
     # The fs driver can be one of the following options: fusedev, fscache, blockdev, proxy, or nodev.
     # If `fs_driver` option is not specified, the default value is fusedev.
     fs_driver = "fusedev"
@@ -95,7 +95,7 @@ data:
     # Let containerd use nydus-overlayfs mount helper
     enable_nydus_overlayfs = false
     # Path to the nydus-overlayfs binary or name of the binary in $PATH
-    nydus_overlayfs_path = "nydus-overlayfs"
+    nydus_overlayfs_path = "/opt/nydus-artifacts/usr/local/bin/nydus-overlayfs"
     # Insert Kata Virtual Volume option to `Mount.Options`
     enable_kata_volume = false
     # Whether to remove resources when a snapshot is removed
