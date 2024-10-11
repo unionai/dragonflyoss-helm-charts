@@ -103,6 +103,8 @@ containerRuntime:
     enable: true
     # -- Custom config path directory, default is /etc/containerd/config.toml
     configFile: "/etc/containerd/config.toml"
+    # If provided, the containerd runtime handler name Nydus will be configured for. Preserving the default
+    runtimeHandlerName: ""
 
 # nydusd configuration
 nydusd:
