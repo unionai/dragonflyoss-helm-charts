@@ -76,6 +76,10 @@ serviceAccount:
 clusterrole:
   create: true
 
+# Runtime class support
+runtimeclass:
+  create: true
+
 # Init container settings
 init:
   containerd:
