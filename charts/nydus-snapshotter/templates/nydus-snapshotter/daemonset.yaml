@@ -128,8 +128,6 @@ spec:
         - /opt/nydus-artifacts/usr/local/bin/containerd-config-updater
         - -c
         - {{ .Values.containerRuntime.containerd.configFile | quote }}
-        - -o
-        - {{ .Values.containerRuntime.containerd.configFile | quote }}
         {{- if .Values.containerRuntime.containerd.runtimeHandlerName }}
         - -r
         - {{ .Values.containerRuntime.containerd.runtimeHandlerName | quote }}
